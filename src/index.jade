@@ -1,0 +1,12 @@
+extends ./layout
+
+block body
+  //- div( ui-view )
+  include petition.jade
+
+block styles
+  link( href='http://fonts.googleapis.com/css?family=Raleway:100,300,800|Lato:300,400' rel='stylesheet' type='text/css' )
+  link( href="styles/style.css" rel="stylesheet" )
+
+block scripts   
+  script(src="js/app.js")
