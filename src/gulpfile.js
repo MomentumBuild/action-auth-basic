@@ -12,31 +12,28 @@ var uglify = require('gulp-uglify');
 var paths = {
   scripts: [
     'bower_components/angular/angular.min.js', 
-    '../../dist/petition.js', 
+    'bower_components/momentum-petition/dist/petition.js', 
     'bower_components/ng-lodash/build/ng-lodash.min.js', 
     'bower_components/angular-animate/angular-animate.min.js',
-    // 'bower_components/angular-messages/angular-messages.min.js',
-    // 'bower_components/angular-resource/angular-resource.min.js',
-    // 'bower_components/angular-sanitize/angular-sanitize.min.js',
-    // 'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-    'bower_components/angular-strap/dist/angular-strap.min.js',
-    'bower_components/angular-strap/dist/angular-strap.tpl.min.js',
-    // 'bower_components/satellizer/satellizer.min.js',
+    'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+    // 'bower_components/angular-strap/dist/angular-strap.min.js',
+    // 'bower_components/angular-strap/dist/angular-strap.tpl.min.js',
+    'bower_components/satellizer/satellizer.min.js',
     'bower_components/angular-loading-bar/build/loading-bar.min.js',
     'app.js',
     'templates.js',
     'app/**/*.js', 
   ],
   css: [ 
-    // 'bower_components/ionicons/css/ionicons.min.css',
+    'bower_components/ionicons/css/ionicons.min.css',
     'bower_components/bootstrap/dist/css/bootstrap.min.css',
     'bower_components/animate.css/animate.min.css',
     'app/**/*.less'
   ],
-  template_index: 'index.jade',
+  pages: 'index.jade',
   templates: 'app/**/*.jade',
-  root: [ '../../example/js/' , '../../example/styles/', '../../example/fonts/'],
-  testing: ['../tests/api/**/*.js'],
+  root: [ '../../'],
+  // testing: ['../tests/api/**/*.js'],
   fonts: ['bower_components/ionicons/fonts/*.*']
 };
 
@@ -46,19 +43,14 @@ gulp.task('less', function () {
     .pipe(less())
     .pipe(concat('style.css'))
     .pipe(minifyCSS({keepBreaks:false}))
-    .pipe(gulp.dest(paths.root[1]));
+    .pipe(gulp.dest(paths.root[0]));
 });
 
-gulp.task('fonts', function () {
-  gulp.src(paths.fonts)
-    .pipe(gulp.dest(paths.root[2]));
-});
-
-gulp.task('template_index', function() {
-  gulp.src(paths.template_index)
+gulp.task('pages', function() {
+  gulp.src(paths.pages)
     .pipe(jade())
     .pipe(htmlify())
-    .pipe(gulp.dest('../../example/'));
+    .pipe(gulp.dest(paths.root[0]));
 });
 
 gulp.task('templates', function() {
@@ -80,15 +72,15 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest(paths.root[0]))
 });
 
-gulp.task('api-testing', function () {
-    return gulp.src(paths.testing[0])
-        .pipe(jasmine());
-});
+// gulp.task('api-testing', function () {
+//     return gulp.src(paths.testing[0])
+//         .pipe(jasmine());
+// });
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-  gulp.watch([ paths.css, paths.scripts, paths.templates, '*.jade' ], ['templates', 'template_index', 'less', 'scripts']);
+  gulp.watch([ paths.css, paths.scripts, paths.templates, '*.jade' ], ['templates', 'pages', 'less', 'scripts']);
 });
 
 
-gulp.task('default', ['templates', 'template_index', 'scripts', 'fonts', 'less', 'watch']);
+gulp.task('default', ['templates', 'pages', 'scripts', 'less', 'watch']);

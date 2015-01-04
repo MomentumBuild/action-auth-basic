@@ -14,7 +14,9 @@
     "animate.css": "*",
     "angular-loading-bar": "~0.6.0",
     "ng-lodash": "~0.1.0",
-    "bootstrap": "~3.3.1"
+    "bootstrap": "~3.3.1",
+    "momentum-petition": "*",
+    "satellizer": "~0.8.8"
   },
   "ignore": [
     "**/.*",
